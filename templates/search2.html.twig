@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %} 
+   
+
+ 
+
+{% block stylesheets %} 
+   <style> 
+      .table { border-collapse: collapse; } 
+      .table th, td { 
+         border-bottom: 1px solid #ddd; 
+         width: 250px; 
+         text-align: left; 
+      } 
+   </style> 
+{% endblock %} 
+
+{% block body %} 
+  <a id = "loadstudent" href = "#">Load student information</a>  
+   </br> 
+   </br>  
+   
+   <table class = "table">  
+      <tbody id = "student"></tbody>  
+   </table>     
+
+   <script>  
+    $(document).ready(function(){   
+        $("#loadstudent").on("click", function(event){  
+           $.ajax({  
+              url:        "{{ path('search2') }}",  
+              type:       'POST',   
+              dataType:   'json',  
+              async:      true,  
+              
+              success: function(data, status) {  
+                 var e = $('<tr><th>Name</th><th>Address</th></tr>');  
+                 $('#student').html('');  
+                 $('#student').append(e);  
+                 
+                 for(i = 0; i < data.length; i++) {  
+                    student = data[i];  
+                    var e = $('<tr><td id = "name"></td><td id = "email"></td></tr>');
+                    
+                    $('#name', e).html(student['fullname']);  
+                    $('#address', e).html(student['email']);  
+                    $('#student').append(e);  
+                 }  
+              },  
+              error : function(xhr, textStatus, errorThrown) {  
+                 alert('Ajax request failed.');  
+              }  
+           });  
+        });  
+     });  
+  </script> 
+
+
+
+{% endblock %}
+
+   

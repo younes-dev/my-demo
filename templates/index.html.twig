@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<style>
+        body { background:skyblue; }
+    .grow { transition: all .5s ease-in-out; 
+        background-color:coral;
+    color:black;
+    width: 1000px;
+    }
+    .grow:hover { transform: scale(1.6); }
+    
+</style>
+{% if (app.user) %}
+<a href="{{ path('security_logout')}}"> logout</a>
+<center><div class="grow" ><h1>WELCOME Mr : {{(app.user.username) }}</h1></div>
+</center>
+{% else %}
+
+    <a href="{{ path('security_login')}}"> Connexion</a>
+ {% endif %}
+        
+{% endblock %}

@@ -1,0 +1,8 @@
+{% if results is defined and results is iterable and results|length >= 1 %}
+    {% for result in results %}
+        <p style="display:inline-block;width:200px;">{{ result.fullname }}</p>
+        <p style="display:inline-block;width:100px;">{{ result.username }}</p>
+        <p style="display:inline-block;width:300px;">{{ result.email }}</p>
+        <p style="display:inline-block;width:120px;">{{ result.roles[0] }}</p>
+    {% endfor %}
+{% endif %}

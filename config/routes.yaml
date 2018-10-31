@@ -1,0 +1,30 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+login_controller:
+    path: /login
+    controller: App\Controller\SecurityController::login        
+logout_controller: 
+    path: /logout
+    controller: App\Controller\SecurityController::logout   
+index:
+    path: /
+    controller: App\Controller\IndexController::index
+admin_controller:
+    path: /admin
+    controller: App\Controller\IndexController::admin
+registration_controller:
+    path: /register
+    controller: App\Controller\RegistrationController::registerAction
+news_controller:
+    path: /news
+    controller: App\Controller\ShowController::show
+list_controller:
+    path: /list/{slug}
+    controller: App\Controller\ShowController::list
+catalog_controller:
+    path: /catalog/{slug}
+    controller: App\Controller\IndexController::catalog
+# app_bundle_route:
+#     path: /recherche
+#     controller: App\Controller\SecurityController::indexAction   

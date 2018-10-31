@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 850px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .input {width: 200p; align-self: center       }
+</style>
+
+<div class="example-wrapper">
+
+    <h1>Hello make your registration here ! ✅</h1>
+
+    {{ form_start(form) }}
+    {{ form_row(form.fullName) }}
+    {{ form_row(form.username) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.password.first) }}
+    {{ form_row(form.password.second) }}
+    <input type="submit" class="btn btn-success">
+    <!-- <button type="submit" >S'inscrire !</button> -->
+    {{ form_end(form) }}
+</div>
+{% endblock %}

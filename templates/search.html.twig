@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %} 
+
+{% block body %}
+ <!-- =================================(  tuto link  )================================ -->
+<!-- https://stackoverflow.com/questions/24606698/search-function-using-twig-in-symfony -->
+ <!-- ================================================================================ -->
+<style>
+    .example-wrapper { margin: 3em auto; max-width: 850px; width: 95%; font: 18px/1.5 sans-serif;text-align:center; }
+    .btn.btn-success{ margin: 1em auto; max-width: 850px; width: 100%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .input {width: 200px; align-self: center}
+    p {padding-bottom:4px;margin-bottom:2px;margin-right: -1px; align-self: center}
+
+
+</style>
+
+<form class="example-wrapper" role="search" id="nav-search-form" method="post" action="{{ path('search') }}" autocomplete="off" >
+    <div>
+        <input type="text" class="form-control" placeholder="Search" name="search" value="{{ val }}">
+            <button type="submit" class="btn btn-success" name="sub">search</button>
+    </div>
+</form>
+
+<div class="example-wrapper">
+{% for message in res %}
+<p style="display:inline-block;width:200px;background-color:rgb(117, 190, 216);">
+        {{ message.fullname }}  
+</p>
+<p style="display:inline-block;width:100px;background-color:rgb(36, 140, 175);">
+         {{ message.username }}  
+</p>
+<p style="display:inline-block;width:300px;background-color:rgb(35, 202, 172);">
+         {{ message.email }}
+</p>
+<p style="display:inline-block;width:120px;background-color:rgb(8, 164, 221);">
+         {{ message.roles[0] }}
+
+</p> 
+{% endfor %}
+<br><br><br>
+<label id="#spinner" ></label>
+
+<br><br>
+<label class="m" ></label>
+</div>
+<!-- trim les espace input dans la form   -->
+<!-- https://stackoverflow.com/questions/43002092/trim-in-symfony-with-apy-datagridbundle -->
+<script>
+        //$('form').submit(function(){
+        //    $(this).find('input').each(function(){
+        //       $(this).val($.trim($(this).val()));
+        //    });});
+                
+        //===================================(     )==================================\\
+        //=================(   jquery-get-input-value-after-keypress   )====================\\
+       // https://stackoverflow.com/questions/8795283/jquery-get-input-value-after-keypress
+
+        //$(document).ready(function() {
+           // $(".form-control").keyup(function() {
+                //var dInput = $('input:text[name=search]').val();
+                //console.log(dInput);
+                //$( ".m" ).html(dInput).css("background-color","black","color","pink");
+                //$( ".m" ).html(dInput).css("color","pink");
+                //$( ".m" ).html(dInput).css("width","200px");
+            //});
+        //});
+
+        $(document).ready(function(event) {
+            $(".form-control").keypress(function() {
+                    setTimeout(function() { //Interrupt the execution thread to allow input to update
+                        var dInput = $('input:text[name=search]').val();
+                        console.log(dInput);
+                        $( ".m" ).html(dInput).css("display","block");
+                        $( ".m" ).html(dInput).css("background-color","black","color","pink");
+                        $( ".m" ).html(dInput).css("color","pink");
+                    }, 1000);
+            });
+       });
+
+
+</script>
+
+<script>
+      //$.ajax({
+        //type: "GET",
+        //url: "{{ path('search') }}",
+        //dataType: "json",
+        //data: {search: input},
+        //cache: false,
+        //success: function (response) {
+               //$('.example-wrapper').replaceWith(response);
+               //$('.example-wrapper').load("{{ path('search') }}?search="+ $search.val());
+               //$('#spinner').hide();
+                //console.log(response);
+                 //},
+        //error: function (response) {
+               //console.log(response);
+                   //}
+      //}); 
+</script>
+
+{% endblock %}

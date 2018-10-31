@@ -1,0 +1,17 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    #
+    exception_controller: App\Controller\ExceptionController::showException
+
+    #*****************************************************
+    form_themes:
+        #- 'form_div_layout.html.twig'
+        #- 'form_table_layout.html.twig'
+        #- 'bootstrap_3_layout.html.twig'
+        - 'bootstrap_3_horizontal_layout.html.twig'
+        #- 'bootstrap_4_layout.html.twig'
+        #- 'bootstrap_4_horizontal_layout.html.twig'
+        #- 'foundation_5_layout.html.twig'
+    

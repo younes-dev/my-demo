@@ -1,0 +1,125 @@
+=====================================================
+============= the view action (1) page =============
+=====================================================
+
+{% extends 'base.html.twig' %}
+{% block body %}
+<input type="text" class="inputs">
+    <button class="ajax" data-url="{{ (path('recherche')) }}" >click me!</button>
+    <div id="ajax-results">here comes the result</div>
+    <script>
+       // $(document).on('click', 'button.ajax', function(){
+        //$(document).on('keypress', 'input.inputs', function(){
+        $(document).ready(function(){
+                that = $(this);
+                $.ajax({
+                    url:that.data('url'),
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        "some_var_name": "some_var_value"
+                    },
+                    async: true,
+                    success: function (data)
+                    {
+                        console.log(data)
+                        $('div#ajax-results').html(data.output);
+
+                    }
+            });
+            return false;
+
+        });
+    </script>
+
+{% endblock %}
+=====================================================
+============= the view action (1) page =============
+=====================================================
+{% extends 'base.html.twig' %}
+{% block body %}
+<input type="text" class="inputs">
+    <button class="ajax" data-url="{{ (path('recherche')) }}" >click me!</button>
+    <div>here comes the result  </div>
+    <div id="ajax-results"><label id="a"></label><label id="b"></label><label id="c"></label></div>
+
+    <script>
+       // $(document).on('click', 'button.ajax', function(){
+        $(document).on('keyup', 'input.inputs', function(){
+        //$(document).ready(function(){
+                that = $(this);
+                $.ajax({
+                    url:that.data('url'),
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        "some_var_name": "some_var_value"
+                    },
+                    async: true,
+                    success: function (data)
+                    {
+                        $div=$("div#ajax-results");
+                        $a=$('label#a').css({"backgroundColor": "red", "border": "1px solid #fff","width":"250px","padding-left":"20px"});
+                        $b=$('label#b').css({"background-color":"yellow","border": "1px solid #fff","width":"160px","padding-left":"20px" });
+                        $c=$('label#c').css({"background-color":"green","border": "1px solid #fff","width":"140px","text-align":"center" });
+                        //$label1.append( data[i][0]+"<br>" );
+                        //$label2.append( data[i][1]+"<br>" );
+                        //$label3.append( data[i][2]+"<br>" );
+                          console.log(data);                        
+                          //$('label#a').append(data[4][0]+"&nbsp;&nbsp;&nbsp;&nbsp;"+"<br>").css("background-color","red");
+                        //$('label#b').append(data[4][1]+"&nbsp;&nbsp;&nbsp;&nbsp;"+"<br>").css("background-color","yellow");
+                       //$('label#c').append(data[4][2]+"<br>") .css("background-color","orange"); 
+                      ////////////////////////////////////////////////////////////////////////////
+                        for (i in data) {  //for (var i = 0; i < data.length; i++){
+                             $a.append( data[i][0]+"    <br>" );
+                             $b.append( data[i][1]+"    <br>" );
+                             $c.append( data[i][2]+"    <br>" );
+                            };
+                    }
+            });
+            return false;
+
+        });
+    </script>
+{% endblock %}
+
+
+=====================================================
+============= the controller action (1) =============
+=====================================================
+    /** 
+      * @Route("/recherche", name="recherche")
+      */
+     public function indexAction(Request $request) {
+     if($request->request->get('some_var_name')){
+         //make something curious, get some unbelieveable data
+        $arrData = ['output' => 'here the result which will appear in div'];
+         return new JsonResponse($arrData);
+     }
+     return $this->render('search/recherche.html.twig');
+}
+
+
+=====================================================
+============= the controller action (2) =============
+=====================================================
+/** 
+* @Route("/recherche", name="recherche")
+*/ 
+public function ListeAction(Request $request)
+{
+    $em = $this->getDoctrine()->getEntityManager();
+//if ($request->isXmlHttpRequest()) {
+if($request->request->get('some_var_name')){
+        $repo = $em->getRepository(User::class);
+        //$datas = $repo->findBy(['username' => 'younes']);
+        $datas = $repo->findAll();                
+        foreach($datas as $data ){
+          $output[]=array($data->getEmail(),$data->getFullname(),$data->getUsername());
+          /////$output=['email' => $data->getEmail() , 'fullname' => $data->getFullname(), 'username' => $data->getUsername()]; 
+          //$output[]=['email' => $data->getEmail() , 'Fullname' => $data->getFullname()];
+        }
+        return new JsonResponse($output);             
+        }              
+        return $this->render('search/recherche.html.twig');
+} 
